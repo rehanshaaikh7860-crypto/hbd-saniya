@@ -9,40 +9,65 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #ff758c, #ff7eb3, #764ba2); min-height: 100vh; color: #fff; overflow-x: hidden; }
+    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #ff758c, #ff7eb3, #764ba2); min-height: 100vh; color: #fff; text-align: center; overflow-x: hidden; }
 
+    /* COUNTDOWN OVERLAY */
     .overlay {
       position: fixed; inset: 0;
       background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
       display: flex; justify-content: center; align-items: center;
-      z-index: 9999; text-align: center; padding: 20px;
+      z-index: 9999; padding: 20px; color: #333;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(15px);
-      padding: 40px 25px; border-radius: 24px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-      border: 1px solid rgba(255,255,255,0.4);
-      max-width: 400px; width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 35px 20px; border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 380px; width: 100%;
     }
 
-    .card h2 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    .card h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4757; margin-bottom: 10px; }
+    .timer-text { font-size: 3.5rem; font-weight: 700; margin: 15px 0; font-family: monospace; color: #2f3542; }
+
+    /* MAIN CONTENT */
+    .main-content { display: none; padding: 40px 20px; animation: fadeIn 1.5s ease-in-out; }
+
+    h1 { font-family: 'Dancing Script', cursive; font-size: 3.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .subtitle { font-size: 1.1rem; margin-top: 10px; opacity: 0.9; }
+
+    /* CAKE & CANDLE SECTION */
+    .cake-container { margin: 40px auto; position: relative; width: 150px; cursor: pointer; }
+    .cake { width: 150px; height: 100px; background: #f8a5c2; border-radius: 10px 10px 0 0; position: relative; margin: 0 auto; box-shadow: inset 0 -10px 0 #f78fb3; }
+    .flame {
+      width: 15px; height: 25px; background: #ffbe76; border-radius: 50% 50% 20% 20%;
+      position: absolute; top: -35px; left: 50%; transform: translateX(-50%);
+      box-shadow: 0 0 15px #ffbe76; animation: flicker 0.6s infinite alternate;
+    }
+    .flame.off { display: none; }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); }
+      100% { transform: translateX(-50%) scale(1.15); }
     }
 
-    .timer-text {
-      font-size: 3.8rem; font-weight: 700; margin: 20px 0;
-      font-family: monospace; text-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    /* MESSAGE CARD */
+    .message-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px); border-radius: 15px;
+      padding: 25px; max-width: 450px; margin: 30px auto;
+      border: 1px solid rgba(255,255,255,0.3); font-size: 1rem; line-height: 1.6;
     }
 
-    .main-content { display: none; text-align: center; padding: 50px 20px; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- COUNTDOWN SCREEN -->
+  <!-- COUNTDOWN OVERLAY -->
   <div class="overlay" id="timerOverlay">
     <div class="card">
       <h2>🎉 Birthday Surprise Locked! 🎉</h2>
@@ -54,8 +79,24 @@
 
   <!-- MAIN SURPRISE CONTENT -->
   <div class="main-content" id="mainPage">
-    <h1 style="font-family:'Dancing Script'; font-size:3.5rem;">Happy Birthday Saniya! 🎂✨</h1>
-    <p style="font-size:1.2rem; margin-top:15px;">Welcome to your special birthday surprise page!</p>
+    <h1>Happy Birthday Saniya! 🎂✨</h1>
+    <p class="subtitle">Wishing you a day filled with love, laughter, and endless joy!</p>
+
+    <!-- INTERACTIVE CAKE -->
+    <div class="cake-container" onclick="blowCandle()">
+      <div class="flame" id="flame"></div>
+      <div style="width: 10px; height: 20px; background: #fff; margin: 0 auto;"></div>
+      <div class="cake"></div>
+      <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">(Tap the candle to blow it out! 🕯️)</p>
+    </div>
+
+    <!-- SECRET MESSAGE BOX -->
+    <div class="message-box">
+      <p>💖 <strong>Dear Saniya,</strong></p>
+      <p style="margin-top: 10px;">
+        May your special day bring you as much happiness as you bring to everyone around you. Keep smiling always and have an awesome year ahead! 🚀🌟
+      </p>
+    </div>
   </div>
 
   <script>
@@ -64,9 +105,9 @@
     const overlayEl = document.getElementById('timerOverlay');
     const mainPageEl = document.getElementById('mainPage');
 
+    // COUNTDOWN TIMER LOGIC
     const timer = setInterval(() => {
       timeLeft--;
-      
       let minutes = Math.floor(timeLeft / 60);
       let seconds = timeLeft % 60;
 
@@ -80,11 +121,23 @@
         overlayEl.style.display = 'none';
         mainPageEl.style.display = 'block';
 
+        // CONFETTI POPPER
         if (typeof confetti === 'function') {
           confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
         }
       }
     }, 1000);
+
+    // CANDLE BLOW ACTION
+    function blowCandle() {
+      const flame = document.getElementById('flame');
+      if (!flame.classList.contains('off')) {
+        flame.classList.add('off');
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
+        }
+      }
+    }
   </script>
 
 </body>
