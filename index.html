@@ -1,144 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Saniya! 🎉</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Saniya! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e0f2fe; /* Light aesthetic baby blue */
+            min-height: 100vh;
+            color: #334155;
+            text-align: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, #bae6fd40 20%, transparent 20%),
+                radial-gradient(circle at 80% 80%, #7dd3fc30 30%, transparent 30%),
+                radial-gradient(circle at 30% 60%, #93c5fd25 10%, transparent 10%);
+        }
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #ff758c, #ff7eb3, #764ba2); min-height: 100vh; color: #fff; text-align: center; overflow-x: hidden; }
+        /* 1. TIMING OVERLAY SCREEN (15 Sec) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #bae6fd; /* soft sky blue */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .timer-h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #0284c7;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(56, 189, 248, 0.3);
+        }
+        
+        .timer-p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #1e40af;
+        }
+        
+        .timer-display {
+            font-size: 4rem;
+            font-weight: 700;
+            font-family: monospace;
+            color: #2563eb;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(37, 99, 235, 0.3);
+        }
+        
+        .loader-dots {
+            font-size: 1rem;
+            color: #1e3a8a;
+            display: flex;
+            gap: 5px;
+        }
 
-    /* COUNTDOWN OVERLAY */
-    .overlay {
-      position: fixed; inset: 0;
-      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
-      display: flex; justify-content: center; align-items: center;
-      z-index: 9999; padding: 20px; color: #333;
-    }
+        @keyframes dots {
+          0%, 20% { content: '.'; }
+          40% { content: '..'; }
+          60% { content: '...'; }
+          80%, 100% { content: ''; }
+        }
+        .loader-dots:after {
+          content: '';
+          animation: dots 1.5s infinite;
+        }
 
-    .card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 35px 20px; border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      max-width: 380px; width: 100%;
-    }
+        #main-site {
+            display: none;
+            position: relative;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
 
-    .card h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ff4757; margin-bottom: 10px; }
-    .timer-text { font-size: 3.5rem; font-weight: 700; margin: 15px 0; font-family: monospace; color: #2f3542; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    /* MAIN CONTENT */
-    .main-content { display: none; padding: 40px 20px; animation: fadeIn 1.5s ease-in-out; }
+        /* 2. MAIN WEBSITE CONTENT */
+        .content-section {
+            padding: 60px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    h1 { font-family: 'Dancing Script', cursive; font-size: 3.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-    .subtitle { font-size: 1.1rem; margin-top: 10px; opacity: 0.9; }
+        h1.main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #0369a1;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 4px rgba(3, 105, 161, 0.2);
+        }
 
-    /* CAKE & CANDLE SECTION */
-    .cake-container { margin: 40px auto; position: relative; width: 150px; cursor: pointer; }
-    .cake { width: 150px; height: 100px; background: #f8a5c2; border-radius: 10px 10px 0 0; position: relative; margin: 0 auto; box-shadow: inset 0 -10px 0 #f78fb3; }
-    .flame {
-      width: 15px; height: 25px; background: #ffbe76; border-radius: 50% 50% 20% 20%;
-      position: absolute; top: -35px; left: 50%; transform: translateX(-50%);
-      box-shadow: 0 0 15px #ffbe76; animation: flicker 0.6s infinite alternate;
-    }
-    .flame.off { display: none; }
+        p.main-subtitle {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
 
-    @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1); }
-      100% { transform: translateX(-50%) scale(1.15); }
-    }
+        .message-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+            border: 1px solid #bae6fd;
+            margin-bottom: 50px;
+        }
 
-    /* MESSAGE CARD */
-    .message-box {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px); border-radius: 15px;
-      padding: 25px; max-width: 450px; margin: 30px auto;
-      border: 1px solid rgba(255,255,255,0.3); font-size: 1rem; line-height: 1.6;
-    }
+        .message-box h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #0284c7;
+            margin-bottom: 20px;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+        .message-box p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 15px;
+            color: #334155;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #2563eb;
+            margin-top: 25px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 4/5;
+        }
+
+        .puzzle-section {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 50px;
+            border: 1px solid #7dd3fc;
+        }
+        
+        .puzzle-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #0284c7;
+            margin-bottom: 20px;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #bae6fd;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            transition: all 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn-action:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+        }
+
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 300px;
+            margin: 0 auto;
+            border: 3px solid #bae6fd;
+            padding: 5px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .puzzle-tile {
+            position: relative;
+            background-color: #f1f5f9;
+            aspect-ratio: 1;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #334155;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tile-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0369a1;
+        }
+
+        .puzzle-tile.empty {
+            background: transparent;
+            cursor: default;
+        }
+
+        .candle-container {
+            margin: 30px auto;
+            position: relative;
+            width: 80px;
+            height: 120px;
+            cursor: pointer;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 80px;
+            background: linear-gradient(#e0f2fe, #38bdf8);
+            border-radius: 5px;
+        }
+
+        .candle-wick {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 15px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 20px;
+            height: 20px;
+            background-color: #ff9800;
+            border-radius: 50% 50% 0% 50%;
+            box-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
+            animation: flicker 0.1s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) rotate(45deg) scale(1); }
+            100% { transform: translateX(-50%) rotate(45deg) scale(1.1); }
+        }
+
+        @media (max-width: 600px) {
+            h1.main-title { font-size: 2.5rem; }
+            .content-section { padding: 40px 15px; }
+            .btn-action { font-size: 0.9rem; }
+            .stats-bar { font-size: 0.8rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- COUNTDOWN OVERLAY -->
-  <div class="overlay" id="timerOverlay">
-    <div class="card">
-      <h2>🎉 Birthday Surprise Locked! 🎉</h2>
-      <p>Midnight Magic unwrap hone me kitna time baaki hai:</p>
-      <div class="timer-text" id="countdown">00:60</div>
-      <p>Hold tight! Secret birthday message loading...</p>
-    </div>
-  </div>
-
-  <!-- MAIN SURPRISE CONTENT -->
-  <div class="main-content" id="mainPage">
-    <h1>Happy Birthday Saniya! 🎂✨</h1>
-    <p class="subtitle">Wishing you a day filled with love, laughter, and endless joy!</p>
-
-    <!-- INTERACTIVE CAKE -->
-    <div class="cake-container" onclick="blowCandle()">
-      <div class="flame" id="flame"></div>
-      <div style="width: 10px; height: 20px; background: #fff; margin: 0 auto;"></div>
-      <div class="cake"></div>
-      <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">(Tap the candle to blow it out! 🕯️)</p>
+    <!-- 1. TIMING OVERLAY SCREEN (15 sec) -->
+    <div id="timing-overlay" class="overlay">
+        <h1 class="timer-h1">✨ Wait For The Magic... ✨</h1>
+        <p class="timer-p">Generating special memories for you</p>
+        <div class="timer-display" id="time-left">00:15</div>
+        <div class="loader-dots">Crunching the data</div>
     </div>
 
-    <!-- SECRET MESSAGE BOX -->
-    <div class="message-box">
-      <p>💖 <strong>Dear Saniya,</strong></p>
-      <p style="margin-top: 10px;">
-        May your special day bring you as much happiness as you bring to everyone around you. Keep smiling always and have an awesome year ahead! 🚀🌟
-      </p>
+    <!-- 2. MAIN WEBSITE CONTENT -->
+    <div id="main-site">
+        <div class="content-section">
+            <h1 class="main-title">Happy Birthday Saniya! 🎉🎂</h1>
+            <p class="main-subtitle">May all your dreams come true, Beautiful Doctor! 💙</p>
+
+            <!-- 1. Special Message Section -->
+            <div class="message-box">
+                <h3>A Special Message</h3>
+                <p>Happy Birthday Saniya! May Allah bless you abundantly. You are incredibly brave, strong, and capable of achieving anything you set your heart upon. May Allah ease all your struggles, remove every stress from your life, and fill your days with pure joy.</p>
+                <p>I wish and pray that you get into the absolute best college for your NEET and further studies, and go on to become the finest doctor. I'll always be right here rooting for you through every step of your journey.</p>
+                <p class="signature">With love and prayers,<br>Always Yours!</p>
+            </div>
+
+            <!-- 2. Candle Interaction -->
+            <div class="message-box" style="text-align: center;">
+                <p>Okay, Beautiful Girl, make a wish! 💙</p>
+                <button class="btn-action" onclick="alert('Yay! Blow your candles now!')">Make A Wish 🎂</button>
+                <p>Blow your birthday candles! (Tap the candle below!)</p>
+                <div class="candle-container" onclick="blowCandle()">
+                    <div id="flame" class="flame"></div>
+                    <div class="candle-wick"></div>
+                    <div class="candle"></div>
+                </div>
+            </div>
+
+            <!-- 3. Our Magical Gallery Section -->
+            <div class="puzzle-section">
+                <h3 class="puzzle-title">Our Magical Gallery ✨</h3>
+                <p style="margin-bottom: 20px; font-weight: 600;">Swipe through some happy memories!</p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://media.istockphoto.com/id/1321473267/photo/young-female-doctor-sitting-at-clinic-desk-and-writing-on-medical-file.jpg?s=612x612&w=0&k=20&c=60iR9yFp1V948mX8hR6mHh6R57f2m5K8f5F04Y-w6U8=" alt="Doctor working"></div>
+                    <div class="gallery-item"><img src="https://media.istockphoto.com/id/1149531182/photo/beautiful-white-flowers-and-birthday-cake.jpg?s=612x612&w=0&k=20&c=w5_P0N-wW6T5M1oK4Z9S6N6H4N5J8R8P9F8T9J4C4G0=" alt="White flower cake"></div>
+                    <div class="gallery-item"><img src="https://media.istockphoto.com/id/1317323736/photo/breathtaking-aerial-view-of-dense-green-forest-covered-with-mossy-trees.jpg?s=612x612&w=0&k=20&c=J5iR5U6M7H8W6J7K8F8N7R8F8J9F0J0F0J0F0J0=" alt="Aerial forest view"></div>
+                    <div class="gallery-item"><img src="https://media.istockphoto.com/id/1320501530/photo/beautiful-sunset-over-the-ocean.jpg?s=612x612&w=0&k=20&c=X7H5M5H5G5C5R5G5H5G5H5G5H5G5H5G5H5G=" alt="Sunset over ocean"></div>
+                </div>
+            </div>
+
+            <!-- 4. Birthday Puzzle Section -->
+            <div class="puzzle-section">
+                <h3 class="puzzle-title">Birthday Puzzle Challenge 🧩</h3>
+                <p style="margin-bottom: 20px; font-weight: 600;">Let's see how fast you are!</p>
+                
+                <div class="stats-bar">
+                    <span>Time: 00:00</span>
+                    <span>Moves: 0</span>
+                </div>
+                
+                <button class="btn-action">New Game 🔄</button>
+                
+                <div class="puzzle-grid">
+                    <div class="puzzle-tile tile-number">6</div>
+                    <div class="puzzle-tile empty"></div>
+                    <div class="puzzle-tile tile-number">4</div>
+                    <div class="puzzle-tile tile-number">2</div>
+                    <div class="puzzle-tile tile-number">5</div>
+                    <div class="puzzle-tile tile-number">7</div>
+                    <div class="puzzle-tile tile-number">1</div>
+                    <div class="puzzle-tile tile-number">8</div>
+                </div>
+                
+                <div style="margin-top: 20px; font-size: 0.9rem;">Solution Preview:</div>
+                <img src="https://media.istockphoto.com/id/1321473267/photo/young-female-doctor-sitting-at-clinic-desk-and-writing-on-medical-file.jpg?s=612x612&w=0&k=20&c=60iR9yFp1V948mX8hR6mHh6R57f2m5K8f5F04Y-w6U8=" alt="Puzzle Solution" style="width: 100px; height: 100px; border-radius: 10px; margin-top: 10px; border: 2px solid #bae6fd;">
+            </div>
+
+        </div>
     </div>
-  </div>
 
-  <script>
-    let timeLeft = 60;
-    const countdownEl = document.getElementById('countdown');
-    const overlayEl = document.getElementById('timerOverlay');
-    const mainPageEl = document.getElementById('mainPage');
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        let seconds = 15;
+        const timeDisplay = document.getElementById('time-left');
+        const overlay = document.getElementById('timing-overlay');
+        const mainSite = document.getElementById('main-site');
 
-    // COUNTDOWN TIMER LOGIC
-    const timer = setInterval(() => {
-      timeLeft--;
-      let minutes = Math.floor(timeLeft / 60);
-      let seconds = timeLeft % 60;
+        const countdown = setInterval(() => {
+            seconds--;
+            let displaySec = seconds < 10 ? '0' + seconds : seconds;
+            timeDisplay.innerText = `00:${displaySec}`;
 
-      let displayMin = minutes < 10 ? '0' + minutes : minutes;
-      let displaySec = seconds < 10 ? '0' + seconds : seconds;
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                overlay.style.display = 'none';
+                mainSite.style.display = 'block';
+                launchConfetti();
+            }
+        }, 1000);
 
-      countdownEl.innerText = `${displayMin}:${displaySec}`;
-
-      if (timeLeft <= 0) {
-        clearInterval(timer);
-        overlayEl.style.display = 'none';
-        mainPageEl.style.display = 'block';
-
-        // CONFETTI POPPER
-        if (typeof confetti === 'function') {
-          confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            flame.style.display = 'none';
+            launchConfetti();
+            setTimeout(() => {
+                alert('Candle blown out! Happy birthday again, Dr. Saniya!');
+            }, 100);
         }
-      }
-    }, 1000);
 
-    // CANDLE BLOW ACTION
-    function blowCandle() {
-      const flame = document.getElementById('flame');
-      if (!flame.classList.contains('off')) {
-        flame.classList.add('off');
-        if (typeof confetti === 'function') {
-          confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
+        function launchConfetti() {
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
         }
-      }
-    }
-  </script>
+    </script>
 
 </body>
 </html>
