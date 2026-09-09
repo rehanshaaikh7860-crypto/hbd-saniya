@@ -15,15 +15,14 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #e0f2fe; /* Light aesthetic baby blue */
+            background-color: #e0f2fe;
             min-height: 100vh;
             color: #334155;
             text-align: center;
             overflow-x: hidden;
             background-image: 
                 radial-gradient(circle at 10% 20%, #bae6fd40 20%, transparent 20%),
-                radial-gradient(circle at 80% 80%, #7dd3fc30 30%, transparent 30%),
-                radial-gradient(circle at 30% 60%, #93c5fd25 10%, transparent 10%);
+                radial-gradient(circle at 80% 80%, #7dd3fc30 30%, transparent 30%);
         }
 
         /* 1. TIMING OVERLAY SCREEN (15 Sec) */
@@ -48,7 +47,6 @@
             font-size: 2.8rem;
             color: #0284c7;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(56, 189, 248, 0.3);
         }
         
         .timer-p {
@@ -63,30 +61,10 @@
             font-family: monospace;
             color: #2563eb;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 5px rgba(37, 99, 235, 0.3);
-        }
-        
-        .loader-dots {
-            font-size: 1rem;
-            color: #1e3a8a;
-            display: flex;
-            gap: 5px;
-        }
-
-        @keyframes dots {
-          0%, 20% { content: '.'; }
-          40% { content: '..'; }
-          60% { content: '...'; }
-          80%, 100% { content: ''; }
-        }
-        .loader-dots:after {
-          content: '';
-          animation: dots 1.5s infinite;
         }
 
         #main-site {
             display: none;
-            position: relative;
             animation: fadeIn 1.5s ease-out forwards;
         }
 
@@ -107,7 +85,6 @@
             font-size: 3.2rem;
             color: #0369a1;
             margin-bottom: 15px;
-            text-shadow: 1px 1px 4px rgba(3, 105, 161, 0.2);
         }
 
         p.main-subtitle {
@@ -135,17 +112,10 @@
             margin-bottom: 15px;
         }
 
-        .card-box p {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #334155;
-        }
-
         .btn-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             padding: 12px 24px;
             background: linear-gradient(135deg, #38bdf8, #2563eb);
             color: white;
@@ -156,113 +126,35 @@
             font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
-            transition: all 0.2s ease;
             margin: 15px 0;
         }
 
-        .btn-action:active {
-            transform: translateY(2px);
-        }
-
-        /* --- CAKE & 20 CANDLE DESIGN --- */
-        .cake-container {
+        /* --- BEAUTIFUL CAKE & CANDLE --- */
+        .cake-wrapper {
             position: relative;
-            width: 200px;
-            height: 180px;
-            margin: 20px auto 10px auto;
+            width: 220px;
+            height: 220px;
+            margin: 20px auto 0 auto;
             cursor: pointer;
         }
 
-        .cake-base {
+        .flame-svg {
             position: absolute;
-            bottom: 0;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
-            height: 50px;
-            background: #f43f5e;
-            border-radius: 10px 10px 0 0;
-            box-shadow: inset 0 -10px 0 #e11d48;
-        }
-
-        .cake-middle {
-            position: absolute;
-            bottom: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 45px;
-            background: #fb7185;
-            border-radius: 10px 10px 0 0;
-            box-shadow: inset 0 -8px 0 #f43f5e;
-        }
-
-        .cake-top {
-            position: absolute;
-            bottom: 85px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 35px;
-            background: #fecdd3;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .cream-drip {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 12px;
-            background: #ffffff;
-            border-radius: 10px 10px 5px 5px;
-        }
-
-        /* 20 Number Candle */
-        .number-candle {
-            position: absolute;
-            bottom: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            font-weight: 900;
-            color: #0284c7;
-            background: #e0f2fe;
-            padding: 2px 10px;
-            border-radius: 8px;
-            border: 2px solid #38bdf8;
-            letter-spacing: 2px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .candle-wick-20 {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 12px;
-            background: #333;
-        }
-
-        .flame-20 {
-            position: absolute;
-            top: -26px;
-            left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 16px;
-            height: 16px;
-            background-color: #ff9800;
-            border-radius: 50% 50% 0% 50%;
-            box-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
-            animation: flicker 0.1s ease-in-out infinite;
+            width: 20px;
+            height: 30px;
+            z-index: 10;
+            animation: flicker 0.15s infinite alternate;
         }
 
         @keyframes flicker {
-            0% { transform: translateX(-50%) rotate(45deg) scale(1); }
-            100% { transform: translateX(-50%) rotate(45deg) scale(1.15); }
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.15); }
         }
 
-        /* GALLERY GRID FIX */
+        /* GALLERY GRID */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -285,17 +177,17 @@
         }
 
         .gallery-caption {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             padding: 6px;
             font-weight: 600;
             color: #0284c7;
             background: #fff;
         }
 
-        /* SPECIAL MESSAGE FIX (Second Last Position) */
         .special-msg-text {
             text-align: left !important;
             margin-bottom: 12px;
+            line-height: 1.6;
         }
 
         .signature {
@@ -307,48 +199,47 @@
             font-weight: 700;
         }
 
-        /* PUZZLE GAME FIX */
+        /* PUZZLE GAME WITH DOCTOR IMAGE & TIMER */
         .stats-bar {
             display: flex;
             justify-content: space-around;
             margin-bottom: 15px;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             background: #f0f9ff;
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid #bae6fd;
             font-weight: 600;
+            color: #0369a1;
         }
 
-        .puzzle-grid {
+        .puzzle-board {
+            width: 270px;
+            height: 270px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            width: 240px;
-            height: 240px;
-            margin: 0 auto;
-            border: 3px solid #bae6fd;
-            padding: 4px;
-            background: #fff;
-            border-radius: 10px;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 3px;
+            border: 4px solid #38bdf8;
+            border-radius: 12px;
+            background: #bae6fd;
+            padding: 3px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .puzzle-tile {
-            background-color: #38bdf8;
-            color: white;
-            border-radius: 6px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.4rem;
-            font-weight: bold;
+        .tile {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80');
+            background-size: 270px 270px;
+            border-radius: 4px;
             cursor: pointer;
-            user-select: none;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
 
-        .puzzle-tile.empty {
-            background: #e0f2fe;
+        .tile.empty {
+            background: #e0f2fe !important;
             cursor: default;
         }
 
@@ -365,39 +256,59 @@
         <h1 class="timer-h1">✨ Wait For The Magic... ✨</h1>
         <p class="timer-p">Generating special memories for you</p>
         <div class="timer-display" id="time-left">00:15</div>
-        <div class="loader-dots">Crunching the data</div>
     </div>
 
     <!-- 2. MAIN WEBSITE CONTENT -->
     <div id="main-site">
         <div class="content-section">
             
-            <!-- TOP TITLE & SHORT MESSAGE -->
             <h1 class="main-title">Happy Birthday Beautiful Girl! 🎉🎂</h1>
             <p class="main-subtitle">Happy Birthday Saniya! May Allah bless you and make your day as beautiful as you are 💙</p>
 
-            <!-- 1. BLOW CANDLE ON CAKE SECTION -->
+            <!-- 1. CAKE & CANDLE SECTION -->
             <div class="card-box">
                 <p style="font-weight: 600; color: #0284c7;">Okay, Beautiful Girl, make a wish! 💙</p>
-                <button class="btn-action" onclick="alert('Yay! Now tap the 20 candle on the cake to blow it!')">Make A Wish 🎂</button>
-                <p style="font-size: 0.9rem; color: #64748b;">Blow your birthday candles! (Tap the candle below!)</p>
+                <button class="btn-action" onclick="alert('Yay! Now tap the candle on top of the cake to blow it!')">Make A Wish 🎂</button>
+                <p style="font-size: 0.9rem; color: #64748b; margin-top: 5px;">Blow your birthday candles! (Tap the 20 candle!)</p>
                 
-                <div class="cake-container" onclick="blowCandle()">
-                    <div class="number-candle">
-                        20
-                        <div class="candle-wick-20"></div>
-                        <div id="flame" class="flame-20"></div>
-                    </div>
-                    <div class="cake-top"><div class="cream-drip"></div></div>
-                    <div class="cake-middle"></div>
-                    <div class="cake-base"></div>
+                <div class="cake-wrapper" onclick="blowCandle()">
+                    <!-- Glowing Flame -->
+                    <svg id="flame" class="flame-svg" viewBox="0 0 20 30">
+                        <path d="M10 0 C15 10 20 15 20 22 A10 10 0 0 1 0 22 C0 15 5 10 10 0 Z" fill="#ff9800"/>
+                        <path d="M10 8 C13 14 16 17 16 22 A6 6 0 0 1 4 22 C4 17 7 14 10 8 Z" fill="#ffeb3b"/>
+                    </svg>
+
+                    <!-- Real 3D-Style Cake with 20 Candle SVG -->
+                    <svg width="220" height="190" viewBox="0 0 200 180">
+                        <!-- Candle 20 -->
+                        <rect x="98" y="32" width="4" height="12" fill="#475569" />
+                        <rect x="80" y="44" width="40" height="22" rx="4" fill="#0284c7" />
+                        <text x="100" y="61" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="sans-serif">20</text>
+                        
+                        <!-- Top Tier -->
+                        <path d="M 50 80 Q 100 70 150 80 L 150 105 Q 100 115 50 105 Z" fill="#fda4af" />
+                        <path d="M 50 80 Q 60 90 70 80 Q 80 90 90 80 Q 100 90 110 80 Q 120 90 130 80 Q 140 90 150 80 L 150 88 Q 100 98 50 88 Z" fill="#ffffff" />
+                        
+                        <!-- Bottom Tier -->
+                        <path d="M 30 110 Q 100 95 170 110 L 170 150 Q 100 168 30 150 Z" fill="#f43f5e" />
+                        <path d="M 30 110 Q 44 122 58 110 Q 72 122 86 110 Q 100 122 114 110 Q 128 122 142 110 Q 156 122 170 110 L 170 120 Q 100 132 30 120 Z" fill="#ffffff" />
+                        
+                        <!-- Plate -->
+                        <ellipse cx="100" cy="155" rx="80" ry="12" fill="#cbd5e1" />
+                        <ellipse cx="100" cy="153" rx="75" ry="10" fill="#f1f5f9" />
+
+                        <!-- Cherries -->
+                        <circle cx="60" cy="78" r="5" fill="#e11d48" />
+                        <circle cx="100" cy="73" r="5" fill="#e11d48" />
+                        <circle cx="140" cy="78" r="5" fill="#e11d48" />
+                    </svg>
                 </div>
             </div>
 
-            <!-- 2. OUR MAGICAL GALLERY SECTION -->
+            <!-- 2. GALLERY SECTION -->
             <div class="card-box">
                 <h3>Our Magical Gallery ✨</h3>
-                <p style="font-size: 0.95rem; font-weight: 600; color: #0369a1;">Swipe through some happy memories!</p>
+                <p style="font-size: 0.95rem; font-weight: 600; color: #0369a1; margin-bottom: 10px;">Swipe through some happy memories!</p>
                 
                 <div class="gallery-grid">
                     <div class="gallery-item">
@@ -405,7 +316,7 @@
                         <div class="gallery-caption">Future Doctor 🩺</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=400&q=80" alt="Birthday Cake">
+                        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80" alt="Birthday Celebration">
                         <div class="gallery-caption">Birthday Vibes 🎂</div>
                     </div>
                     <div class="gallery-item">
@@ -419,7 +330,7 @@
                 </div>
             </div>
 
-            <!-- 3. A SPECIAL MESSAGE SECTION (SECOND LAST POSITION) -->
+            <!-- 3. A SPECIAL MESSAGE SECTION -->
             <div class="card-box">
                 <h3>A Special Message</h3>
                 <p class="special-msg-text">Happy Birthday Saniya! May Allah bless you abundantly. You are incredibly brave, strong, and capable of achieving anything you set your heart upon. May Allah ease all your struggles, remove every stress from your life, and fill your days with pure joy.</p>
@@ -427,19 +338,19 @@
                 <p class="signature">With love and prayers,<br>Always Yours!</p>
             </div>
 
-            <!-- 4. BIRTHDAY PUZZLE CHALLENGE (LAST POSITION) -->
+            <!-- 4. DOCTOR IMAGE PUZZLE GAME (WITH LIVE TIMER) -->
             <div class="card-box">
                 <h3>Birthday Puzzle Challenge 🧩</h3>
-                <p style="font-size: 0.95rem; font-weight: 600; color: #0369a1; margin-bottom: 15px;">Let's see how fast you are!</p>
+                <p style="font-size: 0.95rem; font-weight: 600; color: #0369a1; margin-bottom: 15px;">Solve Future Doctor's Picture!</p>
                 
                 <div class="stats-bar">
-                    <span>Time: <span id="p-time">00:00</span></span>
-                    <span>Moves: <span id="p-moves">0</span></span>
+                    <span>⏱️ Time: <span id="p-time">00:00</span></span>
+                    <span>🧩 Moves: <span id="p-moves">0</span></span>
                 </div>
                 
-                <button class="btn-action" onclick="resetPuzzle()">New Game 🔄</button>
+                <button class="btn-action" onclick="resetPuzzle()">Reset Game 🔄</button>
                 
-                <div class="puzzle-grid" id="puzzle-grid"></div>
+                <div class="puzzle-board" id="puzzle-board"></div>
             </div>
 
         </div>
@@ -449,7 +360,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     
     <script>
-        // 1. TIMING SCRIPT - 15 SECONDS
+        // 1. TIMING OVERLAY COUNTDOWN (15 SECONDS)
         let seconds = 15;
         const timeDisplay = document.getElementById('time-left');
         const overlay = document.getElementById('timing-overlay');
@@ -489,42 +400,97 @@
             });
         }
 
-        // 3. WORKING INTERACTIVE PUZZLE GAME
-        let tiles = [1, 2, 3, 4, 5, 6, 7, 8, ""];
+        // 3. DOCTOR IMAGE SLIDING PUZZLE WITH WORKING TIMER
+        let boardState = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         let moves = 0;
+        let gameTimer = null;
+        let timerSeconds = 0;
+        let gameStarted = false;
+
+        function startTimer() {
+            if (!gameStarted) {
+                gameStarted = true;
+                gameTimer = setInterval(() => {
+                    timerSeconds++;
+                    let mins = Math.floor(timerSeconds / 60);
+                    let secs = timerSeconds % 60;
+                    document.getElementById('p-time').innerText = 
+                        `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+                }, 1000);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(gameTimer);
+            gameStarted = false;
+        }
 
         function initPuzzle() {
             moves = 0;
+            timerSeconds = 0;
+            stopTimer();
             document.getElementById('p-moves').innerText = moves;
-            tiles = [1, 2, 3, 4, 5, 6, 7, 8, ""].sort(() => Math.random() - 0.5);
-            renderPuzzle();
+            document.getElementById('p-time').innerText = "00:00";
+
+            // Shuffle until solvable
+            do {
+                boardState = [0, 1, 2, 3, 4, 5, 6, 7, 8].sort(() => Math.random() - 0.5);
+            } while (boardState.every((val, index) => val === index));
+
+            renderBoard();
         }
 
-        function renderPuzzle() {
-            const grid = document.getElementById('puzzle-grid');
-            grid.innerHTML = "";
-            tiles.forEach((tile, index) => {
-                const tileDiv = document.createElement('div');
-                tileDiv.className = `puzzle-tile ${tile === "" ? "empty" : ""}`;
-                tileDiv.innerText = tile;
-                tileDiv.onclick = () => moveTile(index);
-                grid.appendChild(tileDiv);
+        function renderBoard() {
+            const board = document.getElementById('puzzle-board');
+            board.innerHTML = '';
+
+            boardState.forEach((pos, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+
+                if (pos === 8) {
+                    tile.classList.add('empty');
+                } else {
+                    // Position image pieces correctly
+                    let row = Math.floor(pos / 3);
+                    let col = pos % 3;
+                    tile.style.backgroundPosition = `-${col * 90}px -${row * 90}px`;
+                }
+
+                tile.onclick = () => moveTile(index);
+                board.appendChild(tile);
             });
         }
 
         function moveTile(index) {
-            const emptyIndex = tiles.indexOf("");
-            const validMoves = [index - 1, index + 1, index - 3, index + 3];
-            
-            if (validMoves.includes(emptyIndex)) {
-                // Check edge case row wrapping
-                if ((index % 3 === 0 && emptyIndex === index - 1) || ((index + 1) % 3 === 0 && emptyIndex === index + 1)) return;
-                
-                tiles[emptyIndex] = tiles[index];
-                tiles[index] = "";
+            const emptyIndex = boardState.indexOf(8);
+            const row = Math.floor(index / 3);
+            const col = index % 3;
+            const emptyRow = Math.floor(emptyIndex / 3);
+            const emptyCol = emptyIndex % 3;
+
+            const isAdjacent = (Math.abs(row - emptyRow) + Math.abs(col - emptyCol)) === 1;
+
+            if (isAdjacent) {
+                startTimer();
+                // Swap
+                boardState[emptyIndex] = boardState[index];
+                boardState[index] = 8;
                 moves++;
                 document.getElementById('p-moves').innerText = moves;
-                renderPuzzle();
+                renderBoard();
+                checkWin();
+            }
+        }
+
+        function checkWin() {
+            const isSolved = boardState.every((val, index) => val === index);
+            if (isSolved) {
+                stopTimer();
+                launchConfetti();
+                setTimeout(() => {
+                    alert(`Congratulations Dr. Saniya! 🎉 You solved the puzzle in ${moves} moves and ${document.getElementById('p-time').innerText}! 🩺✨`);
+                }, 200);
             }
         }
 
